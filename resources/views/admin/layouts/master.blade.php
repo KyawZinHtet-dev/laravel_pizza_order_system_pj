@@ -68,6 +68,10 @@
                             <a href="{{ route('order#showOrderListPage') }}">
                                 <i class="fas fa-book"></i>Order List</a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin#customerList') }}">
+                                <i class="fas fa-group"></i>Customer List</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -152,7 +156,7 @@
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="{{ route('adminAccount#detail') }}">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                        <i class="zmdi zmdi-account"></i>Account Profile</a>
                                                 </div>
 
                                                 <div class="account-dropdown__item">

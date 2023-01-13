@@ -7,8 +7,8 @@
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="">
-                    <a href="{{ route('order#showOrderListPage') }}" class=" text-dark"><i class=" zmdi zmdi-arrow-left"></i>
-                    Back</a>
+                    <a href="{{ Session::get('prevUrl') }}" class=" text-dark"><i class=" zmdi zmdi-arrow-left"></i>
+                        Back</a>
                 </div>
                 <div class="card card-body col-md-5 offset-3">
                     <h4 class="text-center">Order Info</h4>
@@ -24,7 +24,7 @@
                         <p class=" col">{{ $orderInfo->order_code }}</p>
                     </div>
                     <div class="row mt-1">
-                        @if($orderInfo->status == 0)
+                        @if ($orderInfo->status == 0)
                             <b class=" col col-6"><i class=" fas fa-circle mr-2 text-warning"></i>Order Status</b>
                             <span class=" col col-1">:</span>
                             <p class=" col text-warning">Pending</p>
@@ -51,43 +51,43 @@
                 </div>
                 <div class="col-md-12">
                     <!-- DATA TABLE -->
-                        <div class="table-responsive table-responsive-data2">
-                            <table class="table table-data2 table-hover">
-                                <thead class=" bg-c3">
+                    <div class="table-responsive table-responsive-data2">
+                        <table class="table table-data2 table-hover">
+                            <thead class=" bg-c3">
+                                <tr>
+                                    <th scope="col" class=" text-dark"></th>
+                                    <th scope="col" class=" text-dark">Product Name</th>
+                                    <th scope="col" class=" text-dark">Quantity</th>
+                                    <th scope="col" class=" text-dark">Price</th>
+                                    <th scope="col" class=" text-dark">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($orderingItems as $orderingItem)
                                     <tr>
-                                        <th scope="col" class=" text-dark"></th>
-                                        <th scope="col" class=" text-dark">Product Name</th>
-                                        <th scope="col" class=" text-dark">Quantity</th>
-                                        <th scope="col" class=" text-dark">Price</th>
-                                        <th scope="col" class=" text-dark">Total</th>
+                                        <th style=" border:none; vertical-align:middle;">
+                                            <img class=" ml-3"
+                                                src="{{ asset('/storage/product_images/' . $orderingItem->image) }}"
+                                                alt="" style="width:80px;">
+                                        </th>
+                                        <td>
+                                            <div>{{ $orderingItem->product_name }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="mx-4">{{ $orderingItem->qty }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $orderingItem->product_price }}ks</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $orderingItem->total_price }}Ks</div>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($orderingItems as $orderingItem)
-                                        <tr>
-                                            <th style=" border:none; vertical-align:middle;">
-                                                <img class=" ml-3"
-                                                    src="{{ asset('/storage/product_images/' . $orderingItem->image) }}"
-                                                    alt="" style="width:80px;">
-                                            </th>
-                                            <td>
-                                                <div>{{ $orderingItem->product_name }}</div>
-                                            </td>
-                                            <td>
-                                                <div class="mx-4">{{ $orderingItem->qty }}</div>
-                                            </td>
-                                            <td>
-                                                <div>{{ $orderingItem->product_price }}ks</div>
-                                            </td>
-                                            <td>
-                                                <div>{{ $orderingItem->total_price }}Ks</div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                    <tr class="spacer"></tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <!-- END DATA TABLE -->
                 </div>
             </div>

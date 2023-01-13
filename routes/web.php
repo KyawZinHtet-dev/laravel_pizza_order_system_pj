@@ -95,10 +95,17 @@ Route::middleware([
 
         // route for change account role
         Route::post('role/change', [AdminAccountController::class, 'changeAccountRole'])->name('admin#changeAccountRole');
+
+        // route for customer list
+        Route::get('customer/list',[AdminAccountController::class,'showCustomerList'])->name('admin#customerList');
+
+        // route for order list of customer
+        Route::get('customer/order/list/{id}',[AdminAccountController::class,'showCustomerOrderList'])->name('admin#showCustomerOrderList');
     });
 
     // route for products
     Route::group(['prefix' => 'product', 'middleware' => 'adminAuth'], function () {
+
         //route for product list page
         Route::get('/list', [ProductController::class, 'showProductPage'])->name('admin#home');
 
@@ -143,6 +150,7 @@ Route::middleware([
 
     // route for user panel
     Route::group(['prefix' => 'user', 'middleware' => 'userAuth'], function () {
+
         // route for user home page
         Route::get('home', [UserController::class, 'showUserHomePage'])->name('user#home');
 
@@ -188,6 +196,7 @@ Route::middleware([
 
         // ajax route group
         Route::group(['prefix' => 'ajax'], function(){
+
             // route reponse product list using ajax
             Route::get('/product/list',[AjaxController::class,'getProductList'])->name('ajax#getProductList');
 
