@@ -35,7 +35,7 @@ class ContactController extends Controller
     private function validationForContact($request){
         Validator::make($request->all(), [
             'customerName' => 'required',
-            'customerEmail' => 'required',
+            'customerEmail' => 'required|email:rfc,dns',
             'customerMessage' => 'required',
         ], [])->validate();
     }

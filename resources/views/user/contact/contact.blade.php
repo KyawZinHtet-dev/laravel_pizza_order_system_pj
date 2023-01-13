@@ -33,7 +33,7 @@
                         @csrf
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Your Name"
-                                name="customerName" required="required" value="{{ old('customerName') }}" autocomplete="off"
+                                name="customerName" required="required" value="{{ old('customerName') }}"
                                 data-toggle="tooltip" title="{{ Auth::user()->name }}" />
 
                             <p class="help-block text-danger">
@@ -45,7 +45,7 @@
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" placeholder="Your Email"
                                 name="customerEmail" required="required" value="{{ old('customerEmail') }}"
-                                data-toggle="tooltip" title="{{ Auth::user()->email }}" autocomplete="off" />
+                                data-toggle="tooltip" title="{{ Auth::user()->email }}" />
                             <p class="help-block text-danger">
                                 @error('customerEmail')
                                     {{ $message }}
