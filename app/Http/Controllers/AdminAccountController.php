@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use function PHPSTORM_META\map;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
-use function PHPSTORM_META\map;
 
 class AdminAccountController extends Controller
 {
@@ -159,8 +161,35 @@ class AdminAccountController extends Controller
         return redirect()->route('admin#showAccountList')->with(['changeRoleMsg' => 'Account role changing success.']);
     }
 
+    // show customer list page
+    public function showCustomerList()
+    {
+        $customerList = User::when(request()->searchKey, function ($data) {
+            $data->where('role', 'user')->where(function ($data) {
+                $data->orwhere('name', 'like', '%' . request()->searchKey . '%')
+                    ->orwhere('email', 'like', '%' . request()->searchKey . '%')
+                    ->orwhere('address', 'like', '%' . request()->searchKey . '%');
+            });
+        })->where('role', 'user')->get();
+
+        Session::put('prevUrl', request()->fullUrl());
+
+        return view('admin.customer.customerList',compact('customerList'));
+    }
 
 
+    // show customer order list
+    public function showCustomerOrderList($id)
+    {
+        $orderList = Order::select('orders.*','users.name')
+        ->where('id',$id)
+        ->join('users','orders.user_id','users.id')
+        ->orderBy('created_at','desc')->get();
+
+        Session::put('prevUrl', request()->fullUrl());
+
+        return view('admin.customer.orderList',compact('orderList'));
+    }
 
 
     // get data for admin account edit

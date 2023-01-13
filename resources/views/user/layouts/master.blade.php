@@ -17,7 +17,7 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('customer_panel/lib/animate/animate.min.css') }}" rel="stylesheet">
@@ -46,15 +46,18 @@
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse"
+                    href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
                     <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
+                    id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
                         <a href="{{ route('user#home') }}" class=" nav-item nav-link">All</a>
-                        @foreach($categories as $category)
-                        <a href="{{ route('user#filterByCategory',$category->category_id) }}" class="nav-item nav-link">{{ $category->name }}</a>
+                        @foreach ($categories as $category)
+                            <a href="{{ route('user#filterByCategory', $category->category_id) }}"
+                                class="nav-item nav-link">{{ $category->name }}</a>
                         @endforeach
                     </div>
                 </nav>
@@ -72,41 +75,63 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('user#home') }}" class="nav-item nav-link active">Home</a>
                             <a href="{{ route('care#showCartListPage') }}" class="nav-item nav-link">My Cart</a>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="{{ route('contact#showContactPage') }}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="{{ route('care#showCartListPage') }}" class="btn px-0 ml-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-white border border-secondary rounded-circle" style="padding-bottom: 2px;" id="cartCount">{{ $cartList->count() }}</span>
+                                <span class="badge text-white border border-secondary rounded-circle"
+                                    style="padding-bottom: 2px;" id="cartCount">{{ $cartList->count() }}</span>
                             </a>
                             <a href="{{ route('order#showOrderHistoryPage') }}" class="btn px-0 ml-3">
                                 <i class="fas fa-history text-primary"></i>
-                                <span class="badge text-white border border-secondary rounded-circle" style="padding-bottom: 2px;">{{ $orderCount }}</span>
+                                <span class="badge text-white border border-secondary rounded-circle"
+                                    style="padding-bottom: 2px;">{{ $orderCount }}</span>
                             </a>
                             <span class=" btn px-0 ml-3">
                                 <span class="badge text-secondary border border-secondary" style="padding-bottom: 2px;">
                                     <!-- Example split danger button -->
                                     <div class="btn-group">
-                                        <button type="button" class=" btn btn-sm bg-dark text-white"><i class=" fas fa-user text-warning mt-1 mr-2"></i> {{ Auth::user()->name }}</button>
-                                        <button type="button" class="btn btn-sm bg-dark text-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class=" btn btn-sm bg-dark text-white"><i
+                                                class=" fas fa-user text-warning mt-1 mr-2"></i>
+                                            {{ Auth::user()->name }}</button>
+                                        <button type="button"
+                                            class="btn btn-sm bg-dark text-white dropdown-toggle dropdown-toggle-split"
+                                            data-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-caret-down text-warning"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a class="text-dark" href="{{ route('user#showAccountDetailPage') }}"><i class=" fas fa-external-link text-warning mr-2"></i>Account Detail</a></button>
-                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a class="text-dark" href="{{ route('user#showAccountEditPage') }}"><i class=" fas fa-pencil-alt text-warning mr-2"></i>Edit Account</a></button>
-                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a class="text-dark" href="{{ route('user#showPassChangePage') }}"><i class=" fas fa-key text-warning mr-2"></i>Change Password</a></button>
+                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a class="text-dark"
+                                                    href="{{ route('user#showAccountDetailPage') }}"><i
+                                                        class=" fas fa-external-link text-warning mr-2"></i>Account
+                                                    Detail</a></button>
+                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a
+                                                    class="text-dark"
+                                                    href="{{ route('user#showAccountEditPage') }}"><i
+                                                        class=" fas fa-pencil-alt text-warning mr-2"></i>Edit
+                                                    Account</a></button>
+                                            <button class=" btn btn-sm d-block dropdown-item  py-2"><a
+                                                    class="text-dark"
+                                                    href="{{ route('user#showPassChangePage') }}"><i
+                                                        class=" fas fa-key text-warning mr-2"></i>Change
+                                                    Password</a></button>
                                             <div class="dropdown-divider"></div>
-                                            <button class=" btn btn-sm d-block dropdown-item py-2"><a class="text-danger" href="{{ route('user#deleteAccount') }}"><i class=" fas fa-trash text-warning mr-2"></i>Delete Account</a></button>
+                                            <button class=" btn btn-sm d-block dropdown-item py-2"><a
+                                                    class="text-danger" href="{{ route('user#deleteAccount') }}"><i
+                                                        class=" fas fa-trash text-warning mr-2"></i>Delete
+                                                    Account</a></button>
                                         </div>
                                     </div>
                                 </span>
                             </span>
                             <span class="btn px-0 ml-3">
-                                <span class="badge text-secondary border border-secondary" style="padding-bottom: 2px;">
+                                <span class="badge text-secondary border border-secondary"
+                                    style="padding-bottom: 2px;">
                                     <form action="{{ route('logout') }}" method="POST" class=" d-inline"
-                                                    class=" w-100 h-100">
-                                                    @csrf
-                                        <i class=" fas fa-sign-out text-warning"></i><input type="submit" value="Logout" class=" btn btn-sm text-white bg-dark">
+                                        class=" w-100 h-100">
+                                        @csrf
+                                        <i class=" fas fa-sign-out text-warning"></i><input type="submit"
+                                            value="Logout" class=" btn btn-sm text-white bg-dark">
                                     </form>
                                 </span>
                             </span>
@@ -126,7 +151,8 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
-                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
+                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed
+                    dolor. Rebum tempor no vero est magna amet no</p>
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
@@ -136,23 +162,35 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our
+                                Shop</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop
+                                Detail</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact
+                                Us</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our
+                                Shop</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop
+                                Detail</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-secondary mb-2" href="#"><i
+                                    class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact
+                                Us</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
@@ -168,9 +206,12 @@
                         </form>
                         <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
                         <div class="d-flex">
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
                             <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
@@ -215,7 +256,6 @@
     {{-- bootstrap link --}}
 
 </body>
-    @yield('jqueryCode')
+@yield('jqueryCode')
 
 </html>
-

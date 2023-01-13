@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AjaxController;
@@ -13,16 +14,6 @@ use Illuminate\Foundation\Console\RouteClearCommand;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // route for login and register page
 
@@ -104,10 +95,17 @@ Route::middleware([
 
         // route for change account role
         Route::post('role/change', [AdminAccountController::class, 'changeAccountRole'])->name('admin#changeAccountRole');
+
+        // route for customer list
+        Route::get('customer/list',[AdminAccountController::class,'showCustomerList'])->name('admin#customerList');
+
+        // route for order list of customer
+        Route::get('customer/order/list/{id}',[AdminAccountController::class,'showCustomerOrderList'])->name('admin#showCustomerOrderList');
     });
 
     // route for products
     Route::group(['prefix' => 'product', 'middleware' => 'adminAuth'], function () {
+
         //route for product list page
         Route::get('/list', [ProductController::class, 'showProductPage'])->name('admin#home');
 
@@ -152,6 +150,7 @@ Route::middleware([
 
     // route for user panel
     Route::group(['prefix' => 'user', 'middleware' => 'userAuth'], function () {
+
         // route for user home page
         Route::get('home', [UserController::class, 'showUserHomePage'])->name('user#home');
 
@@ -197,6 +196,7 @@ Route::middleware([
 
         // ajax route group
         Route::group(['prefix' => 'ajax'], function(){
+
             // route reponse product list using ajax
             Route::get('/product/list',[AjaxController::class,'getProductList'])->name('ajax#getProductList');
 
@@ -230,6 +230,15 @@ Route::middleware([
 
             // route for ordered items list
             Route::get('items/list/',[OrderController::class,'showOrderedItemsPage'])->name('order#showOrderedItemsPage');
+        });
+
+        // route for contact
+        Route::group(['prefix' => 'contact'], function(){
+            // route for show contact page
+            Route::get('page',[ContactController::class,'showContactPage'])->name('contact#showContactPage');
+
+            // route for send message
+            Route::post('send',[ContactController::class,'sendMessage'])->name('contact#sendMessage');
         });
 
     });

@@ -6,9 +6,10 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\OrderList;
-use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -56,6 +57,8 @@ class OrderController extends Controller
         $orderList = Order::select('orders.*','users.name')
                     ->join('users','orders.user_id','users.id')
                     ->orderBy('created_at','desc')->get();
+
+        Session::put('prevUrl', request()->fullUrl());
 
         return view('admin.order.orderList',compact('orderList'));
     }
