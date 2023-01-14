@@ -9,14 +9,29 @@
                 <div class="col-md-12">
                     <!-- DATA TABLE -->
                     <div class=" mb-4">
+                        <h2 class="title-1 text-center">Order List</h2>
                         <div class=" d-flex justify-content-between">
-                            <h2 class="title-1">Order List</h2>
                             <select name="sortOpt" id="sortOpt" class=" form-control-sm col col-2">
                                 <option value="">Sort by status (All)</option>
                                 <option value="0">Pending</option>
                                 <option value="1">Accepted</option>
                                 <option value="2">Rejected</option>
                             </select>
+                            <div>
+                                <form class="form-header" action="{{ route('order#showOrderListPage') }}" method="GET">
+                                    @csrf
+                                    <input class="au-input" type="text" name="searchKey"
+                                        placeholder="Search with order code..." value="{{ request('searchKey') }}" />
+                                    <button class="au-btn--submit" type="submit">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </form>
+                                @if (request('searchKey'))
+                                    <div class=" col col-12 text-center small mt-1 text-dark">Search Key :
+                                        <small class=" text-danger"> {{ request('searchKey') }}</small>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
 
@@ -37,20 +52,29 @@
                                     @foreach ($orderList as $order)
                                         <tr class="tr-shadow">
                                             <td class=" col col-2"> {{ $order->name }}</td>
-                                            <td class="desc col col-3"><a href="{{ route('order#showOrderingItemsPage',$order->order_code) }}">{{ $order->order_code }}</a></td>
+                                            <td class="desc col col-3"><a
+                                                    href="{{ route('order#showOrderingItemsPage', $order->order_code) }}">{{ $order->order_code }}</a>
+                                            </td>
                                             <td class=" col col-2">{{ $order->created_at->format('d-M-y hA') }}</td>
                                             <td class=" col col-2">{{ $order->total_price }}ks</td>
                                             <td>
                                                 <input type="hidden" class="orderId" value="{{ $order->order_id }}">
                                                 <select class="form-control-sm w-75 text-center orderStatus">
-                                                    <option value="0" @if($order->status == 0) {{ 'selected' }} @endif>Pending</option>
-                                                    <option value="1" @if($order->status == 1) {{ 'selected' }} @endif>Accept</option>
-                                                    <option value="2" @if($order->status == 2) {{ 'selected' }} @endif>Reject</option>
+                                                    <option value="0"
+                                                        @if ($order->status == 0) {{ 'selected' }} @endif>Pending
+                                                    </option>
+                                                    <option value="1"
+                                                        @if ($order->status == 1) {{ 'selected' }} @endif>Accept
+                                                    </option>
+                                                    <option value="2"
+                                                        @if ($order->status == 2) {{ 'selected' }} @endif>Reject
+                                                    </option>
                                                 </select>
                                             </td>
                                             <td class=" col col-1">
-                                                <i class=" fas fa-circle-o
-                                                    @if($order->status == 0) text-warning
+                                                <i
+                                                    class=" fas fa-circle-o
+                                                    @if ($order->status == 0) text-warning
                                                     @elseif($order->status == 1) text-success
                                                     @elseif($order->status == 2) text-danger @endif">
                                                 </i>
@@ -64,6 +88,12 @@
                     @else
                         <h3 class=" text-center"><i class=" zmdi zmdi-alert-triangle"></i>No Order Now!</h3>
                     @endif
+                    @if (request('searchKey'))
+                        <div class=" col col-2 text-left mt-4">
+                            <a href="{{ route('order#showOrderListPage') }}" class=" text-dark">
+                                <i class=" zmdi zmdi-arrow-left"></i> Back</a>
+                        </div>
+                    @endif
                     <!-- END DATA TABLE -->
                 </div>
             </div>
@@ -72,22 +102,25 @@
 @endsection
 @section('jqueryCode')
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             // sorting
-            $('#sortOpt').change(function(){
+            $('#sortOpt').change(function() {
                 let sortOptValue = $('#sortOpt').val();
 
                 $.ajax({
-                    type : 'get',
-                    url : 'http://127.0.0.1:8000/product/order/list/sort',
-                    dataType : 'json',
-                    data : {'sortOptValue' : sortOptValue},
-                    success : function(response){
+                    type: 'get',
+                    url: 'http://127.0.0.1:8000/product/order/list/sort',
+                    dataType: 'json',
+                    data: {
+                        'sortOptValue': sortOptValue
+                    },
+                    success: function(response) {
                         if (response.length != 0) {
 
                             let orderList = '';
                             response.forEach(order => {
-                                let orderDate = moment.utc(new Date(order.created_at)).format('DD-MMM-YY hhA');
+                                let orderDate = moment.utc(new Date(order.created_at))
+                                    .format('DD-MMM-YY hhA');
 
                                 let selectedForVal0 = '';
                                 let selectedForVal1 = '';
@@ -96,10 +129,20 @@
                                 let forColor = '';
 
                                 switch (order.status) {
-                                    case 0: selectedForVal0 = 'selected'; forColor = "text-warning"; break;
-                                    case 1: selectedForVal1 = 'selected'; forColor = "text-success"; break;
-                                    case 2: selectedForVal2 = 'selected'; forColor = "text-danger"; break;
-                                    default: break;
+                                    case 0:
+                                        selectedForVal0 = 'selected';
+                                        forColor = "text-warning";
+                                        break;
+                                    case 1:
+                                        selectedForVal1 = 'selected';
+                                        forColor = "text-success";
+                                        break;
+                                    case 2:
+                                        selectedForVal2 = 'selected';
+                                        forColor = "text-danger";
+                                        break;
+                                    default:
+                                        break;
                                 }
 
                                 orderList += `
@@ -124,9 +167,11 @@
                                 $('.orderList').html(orderList);
                                 $('.warningMsg').html("");
                             });
-                        }else if (response.length == 0){
+                        } else if (response.length == 0) {
                             $('.orderList').html("");
-                            $('.warningMsg').html('<h4 class=" text-center mt-5"><i class=" zmdi zmdi-alert-triangle"></i>No Order Data!</h4>');
+                            $('.warningMsg').html(
+                                '<h4 class=" text-center mt-5"><i class=" zmdi zmdi-alert-triangle"></i>No Order Data!</h4>'
+                            );
                         }
                     }
 
@@ -134,18 +179,18 @@
             })
 
             // change order status
-            $('.orderList').on("change",".orderStatus", function(){
+            $('.orderList').on("change", ".orderStatus", function() {
 
                 let statusData = {
-                    'orderStatus' : $(this).parents('td').find('.orderStatus').val(),
-                    'orderId' : $(this).parents('td').find('.orderId').val(),
+                    'orderStatus': $(this).parents('td').find('.orderStatus').val(),
+                    'orderId': $(this).parents('td').find('.orderId').val(),
                 }
 
                 $.ajax({
-                    type : 'get',
-                    url : 'http://127.0.0.1:8000/product/order/status/change',
-                    dataType : 'json',
-                    data : statusData,
+                    type: 'get',
+                    url: 'http://127.0.0.1:8000/product/order/status/change',
+                    dataType: 'json',
+                    data: statusData,
                     // success : function(response){
                     //     if (response.status == 'success') {
                     //        window.location.href = 'http://127.0.0.1:8000/product/order/list';
