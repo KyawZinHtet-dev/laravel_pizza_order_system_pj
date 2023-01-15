@@ -8,6 +8,8 @@ use App\Models\Contact;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
@@ -23,11 +25,17 @@ class ContactController extends Controller
     public function sendMessage(Request $request){
         $this->validationForContact($request);
 
-        Contact::create([
+        $contactData = Contact::create([
             'name' => $request->customerName,
             'email' => $request->customerEmail,
             'message' => $request->customerMessage,
         ]);
+
+        Config::set('mail.from.address',$contactData->email);
+
+        Mail::raw($contactData->message,function($msg) use ($contactData) {
+            $msg->to('admin@gamil.com')->subject($contactData->name);
+        });
 
         return redirect()->route('contact#showContactPage')->with(['successMsg' => 'Sending message to admin team success!']);
     }
@@ -35,7 +43,7 @@ class ContactController extends Controller
     private function validationForContact($request){
         Validator::make($request->all(), [
             'customerName' => 'required',
-            'customerEmail' => 'required|email:rfc,dns',
+            'customerEmail' => 'required|email:rfc,dns|exists:users,email',
             'customerMessage' => 'required',
         ], [])->validate();
     }
