@@ -12,7 +12,7 @@
                 </div>
                 <div class="card card-body col-md-5 offset-3">
                     <h4 class="text-center">Order Info</h4>
-                    <small class=" text-warning text-center mt-2">(Already include delivery feed!)</small>
+                    <small class=" text-warning text-center mt-2">(Already include delivery feed 3000ks!)</small>
                     <div class=" row mt-3">
                         <b class=" col col-6"><i class=" fas fa-user mr-2 text-info"></i> Customer Name</b>
                         <span class=" col col-1">:</span>

@@ -54,7 +54,10 @@ class OrderController extends Controller
     // admin panel
     // show order list page
     public function showOrderListPage(){
-        $orderList = Order::select('orders.*','users.name')
+        $orderList = Order::when(request()->searchKey,function($data,$searchKey){
+                        $data->where('order_code',$searchKey);
+                    })
+                    ->select('orders.*','users.name')
                     ->join('users','orders.user_id','users.id')
                     ->orderBy('created_at','desc')->get();
 
