@@ -16,7 +16,7 @@
                             </div>
                             <hr>
                             <div class=" text-center">
-                                <img src="@if (Auth::user()->profile_image == null) {{ asset('storage/default_user.jpg') }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
+                                <img src="@if (Auth::user()->profile_image == null) {{ 'https://img.freepik.com/free-icon/user_318-704197.jpg' }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
                                     alt="user photo" class="w-25 img-thumbnail" />
                             </div>
                             <form action="{{ route('adminAccount#profilePicEdit') }}" method="POST"

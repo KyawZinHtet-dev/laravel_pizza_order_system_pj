@@ -5,28 +5,28 @@
 @section('content')
     <div class="main-content">
         <div class="section__content section__content--p30">
-                @if(session('photoUpdateMsg'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Attention!</strong> {{ session('photoUpdateMsg') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            @if (session('photoUpdateMsg'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Attention!</strong> {{ session('photoUpdateMsg') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-                @if(session('deletePpMsg'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Attention!</strong> {{ session('deletePpMsg') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    </button>
+                </div>
+            @endif
+            @if (session('deletePpMsg'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Attention!</strong> {{ session('deletePpMsg') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
+                    </button>
+                </div>
+            @endif
             <div class="container-fluid">
                 <div class="row bg-white shadow shadow-md mt-3">
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-3"><img
                                 class="rounded-circle mt-5 img-thumbnail"
-                                src="@if (Auth::user()->profile_image == null) {{ asset('storage/default_user.jpg') }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
+                                src="@if (Auth::user()->profile_image == null) {{ 'https://img.freepik.com/free-icon/user_318-704197.jpg' }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
                                 width="90" alt="user photo">
                             <span class="font-weight-bold">{{ Auth::user()->name }}</span>
                             <span class="text-black-50">{{ Auth::user()->email }}</span>
@@ -35,7 +35,8 @@
                                     Profile Photo</a>
                             </div>
                             <div class=" mt-1">
-                                <a href="{{ route('adminAccount#profilePicDelete') }}" class=" text-danger" onclick="return confirm('Are you sure to delete your profile photo?')">Delete Profile
+                                <a href="{{ route('adminAccount#profilePicDelete') }}" class=" text-danger"
+                                    onclick="return confirm('Are you sure to delete your profile photo?')">Delete Profile
                                     Photo</a>
                             </div>
                         </div>
