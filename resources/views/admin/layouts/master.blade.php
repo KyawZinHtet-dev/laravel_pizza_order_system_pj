@@ -55,14 +55,14 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
+                        <li>
+                            <a href="{{ route('category#list') }}">
+                                <i class="fas fa-th-list"></i>Category</a>
+                        </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="{{ route('admin#home') }}">
                                 <i class="fa-solid fa-pizza-slice"></i>Products
                             </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('category#list') }}">
-                                <i class="fas fa-th-list"></i>Category</a>
                         </li>
                         <li>
                             <a href="{{ route('order#showOrderListPage') }}">
@@ -131,7 +131,7 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="@if (Auth::user()->profile_image == null) {{ asset('storage/default_user.jpg') }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
+                                            <img src="@if (Auth::user()->profile_image == null) {{ 'https://img.freepik.com/free-icon/user_318-704197.jpg' }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
                                                 alt="user photo" />
                                         </div>
                                         <div class="content">
@@ -141,7 +141,7 @@
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="{{ route('adminAccount#detail', Auth::user()->id) }}">
-                                                        <img src="@if (Auth::user()->profile_image == null) {{ asset('storage/default_user.jpg') }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
+                                                        <img src="@if (Auth::user()->profile_image == null) {{ 'https://img.freepik.com/free-icon/user_318-704197.jpg' }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
                                                             alt="user photo" />
                                                     </a>
                                                 </div>
