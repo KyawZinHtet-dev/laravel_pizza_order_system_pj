@@ -6,11 +6,11 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                @if(session('updateMsg'))
+                @if (session('updateMsg'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Attention!</strong> {{ session('updateMsg') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 @endif
@@ -22,7 +22,7 @@
                         <div class=" card-body mt-3 mb-3">
                             <div class=" row">
                                 <div class=" col col-4 text-center">
-                                    <img src="@if (Auth::user()->profile_image == null) {{ asset('storage/default_user.jpg') }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
+                                    <img src="@if (Auth::user()->profile_image == null) {{ 'https://img.freepik.com/free-icon/user_318-704197.jpg' }} @else {{ asset('storage/profile_image/' . Auth::user()->profile_image) }} @endif"
                                         class=" w-50 img-thumbnail" alt="user photo">
                                     <div>
                                         <h4>{{ Auth::user()->name }}</h4>
