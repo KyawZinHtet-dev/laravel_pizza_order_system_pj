@@ -109,7 +109,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: 'http://127.0.0.1:8000/product/order/list/sort',
+                    url: '/product/order/list/sort',
                     dataType: 'json',
                     data: {
                         'sortOptValue': sortOptValue
@@ -149,7 +149,7 @@
                                             <tr class="tr-shadow">
                                                 <td>${order.name}</td>
                                                 <td>
-                                                    <a href="http://127.0.0.1:8000/product/ordered/items/${order.order_code}">${order.order_code}</a>
+                                                    <a href="/product/ordered/items/${order.order_code}">${order.order_code}</a>
                                                 </td>
                                                 <td>${orderDate}</td>
                                                 <td>${order.total_price}ks</td>
@@ -188,7 +188,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: 'http://127.0.0.1:8000/product/order/status/change',
+                    url: '/product/order/status/change',
                     dataType: 'json',
                     data: statusData,
                     // success : function(response){
