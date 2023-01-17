@@ -1,7 +1,7 @@
 @extends('user.layouts.master')
 @section('content')
-     <!-- Breadcrumb Start -->
-     <div class="container-fluid">
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
@@ -21,7 +21,8 @@
                 <div id="product-carousel" data-ride="carousel">
                     <div class="carousel-inner bg-light">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="{{ asset('storage/product_images/'.$product->image) }}" alt="Image">
+                            <img class="w-100 h-100" src="{{ asset('storage/product_images/' . $product->image) }}"
+                                alt="Image">
                         </div>
                     </div>
                 </div>
@@ -46,14 +47,16 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1" id="productAmount">
+                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1"
+                                id="productAmount">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3" id="addToCartBtn" type="button" ><i class="fa fa-shopping-cart mr-1"></i> Add To
+                        <button class="btn btn-primary px-3" id="addToCartBtn" type="button"><i
+                                class="fa fa-shopping-cart mr-1"></i> Add To
                             Cart</button>
                     </div>
                     <div class="d-flex pt-2">
@@ -82,34 +85,31 @@
 
     <!-- Products Start -->
     <div class="container-fluid py-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also Like</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also
+                Like</span></h2>
         <div class="row px-xl-5">
             <div class="col">
                 <div class="owl-carousel related-carousel">
-                    @foreach($productList as $p)
-                    <div class="product-item bg-light">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="{{ asset('storage/product_images/'.$p->image) }}" alt="" style="height: 230px">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href="{{ route('user#showProductDetailPage',$p->product_id) }}"><i class="fas fa-info-circle"></i></a>
+                    @foreach ($productList as $p)
+                        <div class="product-item bg-light">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="{{ asset('storage/product_images/' . $p->image) }}"
+                                    alt="" style="height: 230px">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i
+                                            class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square"
+                                        href="{{ route('user#showProductDetailPage', $p->product_id) }}"><i
+                                            class="fas fa-info-circle"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">{{ $p->name }}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>{{ $p->price }}ks</h5>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">{{ $p->name }}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>{{ $p->price - ($p->price / 10) }}</h5><h6 class="text-muted ml-2"><del>{{ $p->price }}</del></h6>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -118,41 +118,43 @@
     <!-- Products End -->
 @endsection
 @section('jqueryCode')
-<script>
-    $('document').ready(function(){
+    <script>
+        $('document').ready(function() {
 
-        // for view count
-        $.ajax({
-            type : 'get',
-            url : '/user/ajax/viewCount',
-            dataType : 'json',
-            data : {'productId' : $('#productId').val()},
-        })
+            // for view count
+            $.ajax({
+                type: 'get',
+                url: '/user/ajax/viewCount',
+                dataType: 'json',
+                data: {
+                    'productId': $('#productId').val()
+                },
+            })
 
 
-        $('#addToCartBtn').click(function(){
-            let cartData = {
-                'userId' : $('#userId').val(),
-                'productId' : $('#productId').val(),
-                'productAmount' : $('#productAmount').val(),
-            };
+            $('#addToCartBtn').click(function() {
+                let cartData = {
+                    'userId': $('#userId').val(),
+                    'productId': $('#productId').val(),
+                    'productAmount': $('#productAmount').val(),
+                };
 
-            if(cartData.productAmount != 0){
+                if (cartData.productAmount != 0) {
 
-                $.ajax({
-                    type : 'get',
-                    url : '/user/ajax/cart',
-                    dataType : 'json',
-                    data : cartData,
-                    success : function(response){
-                        if(response.status == 'success'){
-                            window.location.href = 'http://127.0.0.1:8000/user/home';
+                    $.ajax({
+                        type: 'get',
+                        url: '/user/ajax/cart',
+                        dataType: 'json',
+                        data: cartData,
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                window.location.href = '/user/home';
+                            }
                         }
-                    }
-                })
-            }
+                    })
+                }
 
+            })
         })
-    })
-</script>
+    </script>
 @endsection

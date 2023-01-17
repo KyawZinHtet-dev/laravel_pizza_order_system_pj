@@ -86,7 +86,7 @@
                             <a href="{{ route('order#showOrderHistoryPage') }}" class="btn px-0 ml-3">
                                 <i class="fas fa-history text-primary"></i>
                                 <span class="badge text-white border border-secondary rounded-circle"
-                                    style="padding-bottom: 2px;">{{ $orderCount }}</span>
+                                    style="padding-bottom: 2px;" id="orderCount">{{ $orderCount }}</span>
                             </a>
                             <span class=" btn px-0 ml-3">
                                 <span class="badge text-secondary border border-secondary" style="padding-bottom: 2px;">

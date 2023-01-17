@@ -39,13 +39,6 @@
                                         <div class="d-flex align-items-center justify-content-center mt-2">
                                             <h5>{{ $product->price }}ks</h5>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-center mb-1">
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +111,7 @@
                 let product_id = $(this).parents('div .product-action').find('.productId').val();
                 $.ajax({
                     type: 'get',
-                    url: 'http://127.0.0.1:8000/user/ajax/cart/add',
+                    url: '/user/ajax/cart/add',
                     dataType: 'json',
                     data: {
                         'productId': product_id
